@@ -1,0 +1,90 @@
+<div class="wrapper" *ngIf="isListing">
+  <div class=row>
+    <div *ngFor="let blog of paginationArray" class=col-lg-4>
+      <div class="card" >
+        <div class="card-body">
+          <img src="{{blog?.imgUrl}}" class="img-fluid" (click)="getDetails(blog)">
+          <h5 (click)="getDetails(blog)">Title -{{blog?.title || 'Not Available'}}</h5>
+          <div [innerHTML]="blog?.content || 'Not Available' "></div>
+          <div>
+            <span class="flat-left">Read Time- {{blog?.time_toread || 'Not Available'}} </span>
+            <span class="flat-right">Date - {{blog?.created_at || 'Not Available'}} </span>
+          </div>
+          <div class="float-right"> Author -{{blog?.author || 'Not Available'}}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-12 ">
+      <pagination class="justify-content-center" [totalItems]="blogList?.length" [(ngModel)]="currentPage" [itemsPerPage]="itemsPerPg" (pageChanged)="pageChanged($event)">
+      </pagination>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div *ngIf="!isListing">
+  <div>
+    <button class="btn btn-primary" (click)="goToListing()">Back</button>
+  </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <img src="{{currentBlog?.imgUrl}}" class="img-fluid">
+          <h5>Title - {{currentBlog?.title || 'Not Available'}}</h5>
+          <h5>{{currentBlog?.blog_url}}</h5>
+          <div [innerHTML]="currentBlog?.content"></div>
+          <div class="float-right">Athor - {{currentBlog?.author || 'Not Available'}}</div>
+          <div>
+            <span class="flat-left">Read Time - {{currentBlog?.time_toread || 'Not Available'}} </span>
+            <span class="flat-right">Id - {{currentBlog?.category_id || 'Not Available'}} </span>
+          </div>
+          <h5>Meta Title - {{currentBlog?.meta_title || 'Not Available'}}</h5>
+          <h5>Meta Description -{{currentBlog?.meta_descriptionl || 'Not Available'}}</h5>
+          <h5>Meta Keyword -{{currentBlog?.meta_keyword || 'Not Available'}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <img src="{{currentBlog?.adv_image}}" class="img-fluid">
+          <h5>Ad Title - {{currentBlog?.adv_title || 'Not Available'}}</h5>
+          <div>Ad Description - {{currentBlog?.adv_description || 'Not Available'}}</div>
+
+          <br>
+          <button class="btn btn-primary"
+            (click)="onAdClick(currentBlog?.adv_buttonlink)">{{currentBlog?.adv_butttonname}}</button>
+
+          <div>
+            <span>
+              <!-- <a href="../icon/facebook-official"></a> -->
+              <fa-icon class="icon" [icon]="fB"></fa-icon>
+              <fa-icon class="icon" [icon]="fT"></fa-icon>
+              <fa-icon class="icon" [icon]="fI"></fa-icon>
+            </span>
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>
